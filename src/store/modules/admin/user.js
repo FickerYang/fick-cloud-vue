@@ -62,7 +62,7 @@ const user = {
                         const item = response.item;
                         const result = item.loginAppUser;
                         if(result){
-                            const role = result.roles[0];
+                            const role = result.role;
                             // const menus = role.menus;  //菜单
                             // commit('SET_ROUTERS', menus)
 

@@ -25,10 +25,13 @@ import bootstrap from './core/bootstrap'
 import './utils/filter' // global filter
 
 import {hasPermission} from'./public/js/btnPermissions.js';  //按钮权限
+import { VIEWKEY } from '@/public/js/dataView.js' //数据视图
 
 Vue.config.productionTip = false
 Vue.prototype.$api = api;  //api
 Vue.prototype.hasPerm = hasPermission;  //按钮权限
+Vue.prototype.$VIEWKEY = VIEWKEY;  //数据视图
+
 Vue.use(GeminiScrollbar)
 
 

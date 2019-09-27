@@ -1,8 +1,8 @@
 /*
- * @Description: 
+ * @Description: 表格
  * @Author: Fick
  * @Date: 2019-09-19 09:13:29
- * @LastEditTime: 2019-09-27 10:38:05
+ * @LastEditTime: 2019-09-27 16:02:38
  * @LastEditors: Fick
  */
 import T from 'ant-design-vue/es/table/Table'
@@ -51,7 +51,6 @@ export default {
     //   show: false,
     //   clear: Function
     //  },
-     
     alert: {
       type: [Object, Boolean],
       default: null
@@ -70,8 +69,14 @@ export default {
       default: 'auto'
     },
     tableView:{
-      type: Array,
+      type: String,
       default: null
+    },
+    columns:{
+      type: Array,
+      default: function () {
+        return []
+      }
     },
     /**
      * enable page URI mode
@@ -125,12 +130,11 @@ export default {
       this.needTotalList = this.initTotalList(this.columns)
       this.loadData()
     }else{
-      
-        this.$api.getGridById({
-            id:this.tableView
-        }).then(res => {
-          let gridColumn = res.item.gridColumn;
-          var gridColumnData = JSON.parse(gridColumn);
+      this.$api.getGridById({
+          id:this.tableView
+      }).then(res => {
+        let gridColumn = res.item.gridColumn;
+        var gridColumnData = JSON.parse(gridColumn);
         gridColumnData.forEach(obj=>{
           if(obj.customRender == "null" || obj.customRender == "undefined"){
             obj.customRender = null;
@@ -138,16 +142,14 @@ export default {
             obj.customRender = this.$parent.$parent[obj.customRender];
           }
           if(obj.visible){
+            
             this.columns.push(obj);
           }
         })
-        // this.columns= aaa;
-          this.needTotalList = this.initTotalList(this.columns)
-          this.loadData()
-        })
+        this.needTotalList = this.initTotalList(this.columns)
+        this.loadData()
+      })
     }
-    // this.needTotalList = this.initTotalList(thisCoumns)
-    // this.loadData()
   },
   methods: {
     /**
@@ -222,7 +224,6 @@ export default {
       }
     },
     initTotalList (columns) {
-      console.log("fdasfsd",columns);
       const totalList = []
       columns && columns instanceof Array && columns.forEach(column => {
         if (column.needTotal) {

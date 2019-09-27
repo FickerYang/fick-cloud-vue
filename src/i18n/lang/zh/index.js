@@ -25,6 +25,6 @@ export default {
         organizations:'组织机构管理',
         certification:'认证中心',
         sys_monitoring:'系统管理',
-        data_source:'源数据',
+        data_source:'数据视图',
     }
 }

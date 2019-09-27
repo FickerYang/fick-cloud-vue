@@ -2,7 +2,7 @@
  * @Description: 用户管理-Table
  * @Author: Fick
  * @Date: 2019-09-19 09:13:29
- * @LastEditTime: 2019-09-27 10:33:58
+ * @LastEditTime: 2019-09-27 16:11:18
  * @LastEditors: Fick
  -->
 <template>
@@ -80,7 +80,6 @@
         rowKey="id"
         :data="loadData"
         :tableView="tableView"
-        :columns="[]"
     >
     </s-table>
     <!-- 模态框 -->
@@ -101,7 +100,6 @@ import { STable } from '@com'
 import {getUserInfo} from '@/api'
 import add from './add'
 import { formatDate,csMessage } from '@/utils/util'
-import { VIEWKEY } from '@/public/js/Common.js'
 export default {
     name: 'UserTableList',
     components: {
@@ -109,7 +107,7 @@ export default {
     },
     data () {
         return {
-            tableView:VIEWKEY.userView,
+            tableView:this.$VIEWKEY.userView,  //视图ID   dataView.js =>VIEWKEY
             /**模态框 */
             modelVisible:false,
             destroyOnClose:true,
@@ -125,51 +123,7 @@ export default {
                 return this.$api.getUserList(Object.assign(parameter, this.queryParam)).then(res => {
                     return res.item;
                 })
-            },
-            columns: [
-                {
-                    title: '用户名',
-                    dataIndex: 'userName',
-                    align:null, //'left' | 'right' | 'center'
-                    customRender:null
-                },
-                {
-                    title: '姓名',
-                    dataIndex: 'nickName'
-                },
-                {
-                    title: '账号是否启用',
-                    dataIndex: 'enabled',
-                    customRender:this.enabledFormat
-                },
-                {
-                    title: '账号是否锁定',
-                    dataIndex: 'accountNonLocked',
-                    customRender:this.accountNonLockedFormat
-                },
-                {
-                    title: '手机号码',
-                    dataIndex: 'mobile'
-                },
-                {
-                    title: '邮箱',
-                    dataIndex: 'email'
-                },
-                {
-                    title: '最后一次登录IP',
-                    dataIndex: 'lastLoginIp'
-                },
-                {
-                    title: '最后一次登录时间',
-                    dataIndex: 'lastLoginDate',
-                    customRender:this.lastLoginDateFormat
-                },
-                {
-                    title: '操作',
-                    dataIndex: 'operation',
-                    customRender:this.operationFormat
-                },
-            ],      
+            }
         }
     },
     created () {
@@ -201,6 +155,7 @@ export default {
             if(res.status === 200){
               csMessage.success(_this);
               this.modelVisible = false;
+              this.$refs.table.refresh(false)
             }else{
               csMessage.error(_this);
             }
@@ -211,6 +166,7 @@ export default {
             if(res.status === 200){
               csMessage.success(_this);
               this.modelVisible = false;
+              this.$refs.table.refresh(false)
             }else{
               csMessage.error(_this);
             }
@@ -258,7 +214,7 @@ export default {
       toggleAdvanced () {
           this.advanced = !this.advanced
       },
-      operationFormat(text, row, index){
+      operationFormata(text, row, index){
        return (
          <div class="table-operator">
           <a-button type="dashed" onClick={() => {

@@ -41,8 +41,8 @@ router.beforeEach((to, from, next) => {
                 store
                 .dispatch('admin/GetInfo')
                 .then(res => {
-                    const roles = res.item.loginAppUser && res.item.loginAppUser.roles
-                    const menus = roles[0].menus;
+                    const roles = res.item.loginAppUser && res.item.loginAppUser.role
+                    const menus = roles.menus;
                     localStorage.setItem('menu_data', JSON.stringify(menus))
                     store.dispatch('admin/GenerateRoutes', { menus }).then(() => {
                         // 根据roles权限生成可访问的路由表
