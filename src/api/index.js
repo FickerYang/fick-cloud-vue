@@ -16,7 +16,8 @@ import {
   // const _host= 'http://127.0.0.1:8080';
   // const _host= 'http://acl.itlp.top:8090/cloud-platform-web';
   // const _host= 'http://47.111.164.39:8092/cloud-platform-web';
-  const _host= 'http://127.0.0.1:8086';
+  // const _host= 'http://127.0.0.1:8086';
+  const _host= 'http://10.30.30.163:8086';
   
   export default {
     getGridUrl(params) {return HTTP_GET(_host+params.url, params)},  //数据视图
